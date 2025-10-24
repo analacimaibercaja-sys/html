@@ -1,0 +1,9 @@
+Hacer una pagina web que va a tener lo siguiente.
+Una cabecera que contendrá.
+Alimentación Morcillo. Foto de morcilla en el header.
+En el pie @2025 Morcillosa C/Embutido, 89
+En el cuerpo, dos partes, una lista para enumerar los ingredientes de arroz a la cubana. y otra lista para la elaboración.
+Al final tendremos un formulario que contendrá los siguientes campos:
+Nombre (Text)
+Edad (rango entre 18 y 190)
+Contraseña (Password)

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <style>
+        form {
+            margin-bottom: 15px;
+            width: 50%;
+            padding: 15px;
+            border: solid 1px #000;
+        }
+
+        fieldset {
+            margin-bottom: 10px;
+        }
+
+        input {
+            border: solid 1px;
+            margin-bottom: 10px;
+        }
+
+        input:invalid {
+            border-color: #f00;
+        }
+
+        input:valid {
+            border-color: #0f0;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <form method="post" action="marvel.es">
+        <fieldset>
+            <legend>Datos Personales</legend>
+            <div>
+                <label for="fullName">Nombre completo:</label>
+                <input type="text" name="fullName" id="fullName" placeholder="Nombre completo" required maxlength="40"
+                    minlength="2">
+            </div>
+            <div>
+                <label for="identification">DNI/NIE:</label>
+                <input type="text" name="identification" id="identification" required
+                    pattern="^(x?\d{8}|[xyz]\d{7})[trwagmyfpdxbnjzsqvhlcke]$" placeholder="DNI/NIE">
+            </div>
+            <div>
+                <label for="maritalStatus">Estado civil:</label>
+                <select required name="maritalStatus" id="maritalStatus">
+                    <option value="" disabled selected>Seleccione una opción</option>
+                    <option value="soltero">Soltero</option>
+                    <option value="casado">Casado</option>
+                    <option value="viudo">Viudo</option>
+                    <option value="divorciado">Divorciado</option>
+                    <option value="otro">Otro</option>
+                </select>
+            </div>
+        </fieldset>
+        <input type="submit" value="Enviar">
+
+    </form>
+
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<html>
+<head>
+    <title>Concatenar</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head> 
+<body>
+    <h1>Concatenar nombre y apellido</h1>
+    <input type="text" id="nombre" placeholder="Nombre">
+    <input type="text" id="apellido" placeholder="Apellido">    
+    <input type="button" id="concatena" value="Concatena">
+    <input type="text" id="nombreCompleto">
+    <input type="button" id="agregarNombre" value="Agregar Nombre">
+    <ol id="nombresAgregados">
+    </ol>   
+
+    
+    <script type="text/javascript">
+        let botonConcatena = document.getElementById("concatena");
+        botonConcatena.addEventListener("click", concatenarNombre);
+        let botonAgregar = document.getElementById("agregarNombre");
+        botonAgregar.addEventListener("click", agregarNombre);
+
+
+        function concatenarNombre() {
+            let nombreInput = document.getElementById("nombre");
+            let apellidoInput = document.getElementById("apellido");
+            let nombreCompletoInput = document.getElementById("nombreCompleto");
+
+            let nombre = nombreInput.value;
+            let apellido = apellidoInput.value;
+
+            let nombreCompleto = nombre + " " + apellido;
+            nombreCompletoInput.value = nombreCompleto;
+        }
+
+        function agregarNombre() {
+            let nombreCompleto = document.getElementById("nombreCompleto").value;
+
+            if (nombreCompleto.trim() !== "") {
+                let listaNombres = document.getElementById("nombresAgregados");
+                let nuevoNombre = document.createElement("li");
+                nuevoNombre.textContent = nombreCompleto+"("+nombreCompleto.length+")";               listaNombres.appendChild(nuevoNombre);
+            } else {
+                alert("Por favor, introduce el nombre de una ciudad.");
+            }
+        }
+    </script>   
+</body>

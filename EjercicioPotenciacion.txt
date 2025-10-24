@@ -1,0 +1,9 @@
+Crear un HTML con dos campos base y exponente. 
+Existirá un botón denominado calcula.
+Al pulsar calcula, tomará el campo base y lo elevará al exponente, por ejemplo: 
+Si he puesto 2 de base y 3 de exponente será 2*2*2 
+Ese resultado lo pondremos en otro campo denominado resultado.
+Otro botón tomará el resultado y lo multiplicará por si mismo, 
+dejando el resultado en nuevo campo
+Siguiendo el ejemplo anterior 8*8 = 64.
+

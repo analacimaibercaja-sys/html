@@ -1,0 +1,13 @@
+Vamos a crear un documento de HTML con lo siguiente:
+Un colección ol vacia <ol id="lista" </ol> 
+un textbox para introducir una ciudad
+un botón para añadir la ciudad a la lista.
+
+
+primero: crear HTML y poner id a todo.
+segundo: crear una función que haga el proceso.
+tercero: Añadir el manejador click y asociarlo a la función.
+cuarto: En la función captura el valor del campo de texto.
+quinto: Crear un elemento de tipo li
+sexto: Añadir el elemento creado a la lista.
+

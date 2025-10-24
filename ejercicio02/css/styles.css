@@ -1,0 +1,32 @@
+#demoFont {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    word-spacing: 2px;
+    color: #363636;
+    font-weight: normal;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+    background-color: #FFEEE6;
+}
+
+#borderDemo {
+    border: 5px solid #E4D4CE;
+    border-radius: 5px;
+}
+
+ul>li:first-child{
+    color:purple;
+    font-size: 30px;
+}
+ol>li:first-child{
+    text-transform: uppercase;
+}
+footer{
+    
+    background-image:url('/img/iconoMorcilla.png');
+    background-repeat : repeat-x;   
+    
+}

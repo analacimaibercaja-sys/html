@@ -1,0 +1,8 @@
+Trabajar con la pagina web de antes para darle un estilo, que estilos quiero cambiar.
+Las fuentes de los textos.
+en el color de los textos.
+En el borde de la imagen.
+En el color de fondo del body.
+Luego quiero que el primer li dentro de un ol esté en mayúsculas
+El primer li dentro de un ul este en color purple y tenga un tamaño de 30.
+

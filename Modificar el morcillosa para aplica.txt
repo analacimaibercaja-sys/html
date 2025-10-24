@@ -1,0 +1,4 @@
+Modificar el morcillosa para aplicar backgrounds bordes y cajas. Por ejemplo poner un borde cada articulo.
+Poner una imagen de fondo para el footer y otra para el header.
+La imagen del footer debe de repetirse en el ejex.
+Buscar una imagen pequeña para que se vea la repetición.

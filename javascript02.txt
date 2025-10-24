@@ -1,0 +1,5 @@
+1.- Sacar en el HTML la suma de los números pares del 1 al 1000
+2.- Sacar en el HTML el valor medio de los 102 primeros números impares.
+--------------------------------------------------------------------------
+3.- Crear una función denominada Suma. Esta función recibirá un numero variable de argumentos. La función deberá de sumar todos los argumentos que le han pasado, por ejemplo. Suma (8,9,1,2) escribirá 20. Suma(1,2) escribirá 3.
+arguments.length te va la cantidad de argumentos, usar un for para sumarlos.

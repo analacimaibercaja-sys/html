@@ -1,0 +1,6 @@
+Crear un HTML con dos campos de texto uno para poner el nombre y el otro para poner el apellido.
+Crear un botón que lo que haga sea (en el caso de que los dos campos no estén vacíos) concatenar nombre y apellido y ponerlo en 
+un tercer input denominado nombre completo.
+Otro botón, capturará el contenido de este último input box y lo añadirá a un ul, una lista, con el nombre completo y el tamaño entre paréntesis (mirar la función length para determinar el tamaño) y concatenar cadenas para ver como crear el li.
+
+

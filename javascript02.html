@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="txtEntrada" >
+    <input type="button" id="btnBoton" value="Mostrar Texto">
+    <script>
+        //Sacar en el HTML la suma de los números pares del 1 al 1000
+        let suma=0;
+        for(let i = 1; i <= 1000; i++) {
+            if (i % 2 === 0) {
+                suma += i;
+                console.log("i", i);
+                console.log("suma", suma);
+            }
+        }
+        document.write("La suma de los números pares del 1 al 1000 es: " + suma + "<br>" );
+
+        //Sacar en el HTML el valor medio de los 102 primeros números impares.
+        suma = 0;
+        let contador = 0;
+        for(let j = 1; contador < 102; j += 2) {
+            suma += j;
+            contador++;
+        }
+        console.log("suma", suma);
+        console.log("contador", contador);
+        let media = suma / contador;
+        document.write("La media de los 102 primeros números impares es: " + media  );
+
+        // Pruebas de uso de la función Suma
+        document.write("<br>");
+        document.write("8 + 9 +1 + 2 = " + Suma(8,9,1,2) + "<br>");
+        document.write("1 + 2 = " + Suma(1,2) + "<br>");
+      
+        function Suma(){
+            let suma = 0;
+            for(let i = 0; i < arguments.length; i++) {
+                suma += arguments[i];
+                console.log("arguments[i]", arguments[i]);
+                console.log("suma", suma);
+            }
+            return suma;
+        }
+    </script>
+</body>
+</html>

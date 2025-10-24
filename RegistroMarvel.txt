@@ -1,0 +1,38 @@
+Vamos a crear una pagina de registro en el portal.
+
+Dos fieldSets (Conjuntos de campos)
+FieldSet (Datos Personales)
+Nombre Completo: (required)
+Edad : Numero (12 - 120) (required)
+Teléfono: 
+Dirección: TextArea. 50 columnas y 4 filas un total de 200 caracteres.
+
+
+FieldSet (Datos Frikis)
+ComboBox: Seleccionamos entre idiomas, Los tebeos los quiero en el idioma: Ingles, Frances, Español.
+OptGroup: Seleccionar el personaje preferido.
+			Los vengadores.
+				Thor
+				Capitan America.
+				Hulk
+				Ojo de Halcón.
+			Los Cuatro fantásticos.
+				La cosa.
+				La mujer invisible.
+				Mr Fantástico.
+				La antorcha.
+
+Seleccionar vuestro color favorito. Selector de Color.
+
+Quiero que useis estos estilos.
+
+input{
+ border: solid 1px;
+}
+input:invalid {
+ border-color: #f00;
+}
+input:valid {
+ border-color: #0f0;
+} 
+

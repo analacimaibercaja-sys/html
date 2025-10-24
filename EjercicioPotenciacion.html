@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <input type="number" id="base" placeholder="Base">
+        <input type="number" id="exponente" placeholder="Exponente">
+        <input type="button" id="calcular" value="Calcula">
+        <input type="text" id="resultado" placeholder="Resultado">
+        <input type="button" id="multiplicar" value="Multiplicar">
+        <input type="text" id="nuevoResultado" placeholder="Nuevo Resultado">
+    </div>
+    <div>
+        <input id="ageCategory" name="ageCategory" list="ageRanges" />
+        <datalist id="ageRanges">
+            <option value="Under twos"></option>
+            <option value="2 - 7"></option>
+            <option value="8 - 12"></option>
+            <option value="13-17"></option>
+            <option value="Adult"></option>
+        </datalist>
+        <textarea id="carDescription" name="carDescription" cols="80" rows="5"
+            placeholder="Enter a short description of your car" maxlength="399"></textarea>
+        <select id="carManufacturer" name="carManufacturer">
+            <optgroup label="European">
+                <option value="volvo">Volvo</option>
+                <option value="audi">Audi</option>
+            </optgroup>
+            <optgroup label="American">
+                <option value="chrysler">Chrysler</option>
+                <option value="ford">Ford</option>
+            </optgroup>
+        </select>
+    </div>
+    <script>
+        document.getElementById("calcular").addEventListener("click", calculaPotencia);
+
+        function calculaPotencia() {
+            let base = parseFloat(document.getElementById("base").value);
+            let exponente = parseInt(document.getElementById("exponente").value);
+            let resultado = Math.pow(base, exponente);
+            document.getElementById("resultado").value = resultado;
+            // Añadir el event listener para el botón de multiplicar
+            document.getElementById("multiplicar").addEventListener("click", multiplicaResultado);
+        }
+
+        function multiplicaResultado() {
+            let resultado = parseFloat(document.getElementById("resultado").value);
+            let nuevoResultado = resultado * resultado;
+            document.getElementById("nuevoResultado").value = nuevoResultado;
+            // Una vez mostrado el resultado eliminamos el event listener
+            document.getElementById("multiplicar").removeEventListener("click", multiplicaResultado);
+        }
+
+    </script>
+</body>
+
+</html>

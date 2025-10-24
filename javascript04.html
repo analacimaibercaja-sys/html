@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="txtNombre" placeholder="Nombre">
+    <input type="text" id="txtApellido" placeholder="Apellido">
+    <input type="button" id="btnConcatenar" value="Unir nombre y apellido">
+    <input type="text" id="txtNombreCompleto" placeholder="Nombre completo">
+    <input type="button" id="btnAgregarLista" value="Agregar a la lista">
+    <ul id="listaNombres"></ul>
+
+    <script>
+        let botonConcatenar = document.getElementById("btnConcatenar");   
+        botonConcatenar.addEventListener("click", concatenarNombreApellido);
+        let botonAgregarLista = document.getElementById("btnAgregarLista");
+        botonAgregarLista.addEventListener("click", agregarNombreALista);
+
+        function concatenarNombreApellido() {
+            let nombre = document.getElementById("txtNombre").value;
+            let apellido = document.getElementById("txtApellido").value;
+            // comprobamos que los campos no están vacíos
+            if (nombre.trim() === "" || apellido.trim() === "") {
+                alert("Por favor, complete ambos campos: Nombre y Apellido.");
+                //return;
+            } else{
+                let nombreCompleto = nombre + " " + apellido;
+                document.getElementById("txtNombreCompleto").value = nombreCompleto;
+            }
+            //limpiar los campos de nombre y apellido
+            document.getElementById("txtNombre").value = "";
+            document.getElementById("txtApellido").value = "";
+        }
+
+        function agregarNombreALista() {
+            let nombreCompleto = document.getElementById("txtNombreCompleto").value;
+            if (nombreCompleto.trim() === "") {
+                alert("El campo Nombre Completo está vacío. Por favor, concatene Nombre y Apellido primero.");
+                //return;
+            } else{
+                let longitudNombre = nombreCompleto.length;
+                let elementoLi = document.createElement("li");
+                elementoLi.textContent = nombreCompleto + " (" + longitudNombre + ")";
+                let listaNombres = document.getElementById("listaNombres");
+                listaNombres.appendChild(elementoLi);
+            }
+            // Limpiar el campo de texto
+            document.getElementById("txtNombreCompleto").value = "";
+        }
+
+    </script>
+</body>
+</html>
+

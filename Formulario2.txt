@@ -1,0 +1,18 @@
+Vamos a crear un nuevo formulario en HTML.
+En este formulario crearemos un fieldset con titulo Datos Personales.
+Aparecerán los siguientes campos.
+Nombre Completo: Será requerido y como máximo serán 40 caracteres y como mínimo 2
+DNI/NIE: Será requerido y lo comprobaremos con una expresión regular, por ejemplo la regex101.com
+Tendremos también un desplegable (también obligatorio) para indicar estado civil, que podrá ser:
+	Soltero
+	Casado
+	Viudo
+	Divorciado
+	Otro
+El formulario se enviará la página Marvel.es con el método post.
+Crear estilos para mostrar los campos válidos e inválidos.
+
+
+
+
+

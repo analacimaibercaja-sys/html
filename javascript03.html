@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <input type="text" id="txtCiudad" >
+    <input type="button" id="btnAgregar" value="Añadir Ciudad">
+    
+    <ol id="lista" ></ol>
+
+    <script>
+        // Añadir el manejador click y asociarlo a la función
+        let botonAgregar =  document.getElementById("btnAgregar");
+        botonAgregar.addEventListener("click", agregarCiudad);
+
+        function agregarCiudad() {
+            // Capturar el valor del campo de texto
+            let ciudad = document.getElementById("txtCiudad").value;
+            if (ciudad.trim() === "") {
+                alert("Por favor, ingrese el nombre de una ciudad.");
+                return;
+            } else{
+                // Crear un elemento de tipo li
+                let elementoLi = document.createElement("li");
+                elementoLi.textContent = ciudad;
+                
+                // Añadir el elemento creado a la lista
+                let lista = document.getElementById("lista");
+                lista.appendChild(elementoLi);
+            }
+            
+            // Limpiar el campo de texto
+            document.getElementById("txtCiudad").value = "";
+        }
+
+    </script>
+    
+</body>
+</html>
+

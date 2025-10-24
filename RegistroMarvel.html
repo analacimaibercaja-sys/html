@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Marvel</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 10px 200px;
+        }
+
+        input {
+            border: solid 1px;
+        }
+
+        input:invalid {
+            border-color: #f00;
+        }
+
+        input:valid {
+            border-color: #0f0;
+        }
+
+        form {
+            margin-bottom: 15px;
+            width: 75%;
+            padding: 25px;
+            border: solid 1px #000;
+            border-radius: 10px;
+        }
+
+        div {
+            margin-bottom: 15px;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 0;
+        }
+        fieldset {
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <form>
+        <h1>Registro Marvel</h1>
+        <fieldset>
+            <legend>Datos Personales</legend>
+            <div>
+                <label for="fullName" name="fullname">Nombre completo:* </label>
+                <input type="text" name="fullName" id="fullName" required >
+            </div>
+            <div>
+                <label for="age" name="age">Edad: *</label>
+                <input type="number" name="age" id="age" min="12" max="120" required >
+            </div>
+            <div>
+                <label for="telephone" name="telephone">Teléfono: </label>
+                <input type="tel" name="telephone" id="telephone" pattern="[0-9]{9}">
+            </div>
+            <div>
+                <label for="address" name="address">Dirección: </label>
+                <textarea name="address" id="address" cols="50" rows="4"></textarea>
+            </div>
+
+        </fieldset>
+        <fieldset>
+            <legend>Datos Frikis</legend>
+            <div>
+                <label for="language" name="language">Idioma: </label>
+                <select id="language" name="language">
+                    <option value="" disabled selected>Seleccione una opción</option>
+                    <option value="english">Inglés</option>
+                    <option value="french">Francés</option>
+                    <option value="spanish">Español</option>
+                </select>
+            </div>
+            <div>
+                <label for="characters" name="characters">Personaje favorito: </label>
+                <select id="characters" name="characters">
+                    <option value="" disabled selected>Seleccione una opción</option>
+                    <optgroup label="Los Vengadores">
+                        <option value="thor">Thor</option>
+                        <option value="captainAmerica">Capitán América</option>
+                        <option value="hulk">Hulk</option>
+                        <option value="eyeHawk">Ojo de Halcón</option>
+                    </optgroup>
+                    <optgroup label="Los Cuatro Fantásticos">
+                        <option value="theThing">La cosa</option>
+                        <option value="invisibleWoman">La mujer invisible</option>
+                        <option value="misterFantastic">Mr Fantástico</option>
+                        <option value="humanTorch">La Antorcha</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div>
+                <label for="color" name="color">Color favorito: </label>
+                <input type="color" id="color" name="color" value="#ff0000">
+            </div>
+        </fieldset>
+    </form>
+</body>
+
+</html>
