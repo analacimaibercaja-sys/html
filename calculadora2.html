@@ -9,7 +9,8 @@
       body {
         height: 100%;
         margin: 0;
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto,
+          "Helvetica Neue", Arial;
       }
       body {
         display: flex;
@@ -37,17 +38,17 @@
         background: #fafafa;
         text-align: right;
       }
-      .buttons-panel {
+      .buttons-panel { /* panel de botones*/
         display: flex;
         gap: 12px;
       }
-      .num-panel {
+      .num-panel { /* panel de números */
         flex: 1;
         display: flex;
         flex-direction: column;
         gap: 8px;
       }
-      .num-row {
+      .num-row { /* fila de botones numéricos */
         display: flex;
         gap: 8px;
       }
@@ -60,22 +61,22 @@
         cursor: pointer;
       }
       input[type="button"]:active {
-        transform: translateY(1px); /* mover un pixel para el efecto de pulsar el botón*/
+        transform: translateY(1px); /* mover un pixel para el efecto de pulsar el botón */
       }
-      .num-btn {
+      .num-btn { /* botón numérico */
         background: #e6e7ea;
       }
-      .clr-btn {
+      .clr-btn { /* botón clear */
         background: #ff6b6b;
         color: #fff;
       }
-      .ops-panel {
+      .ops-panel { /* panel de operaciones */
         width: 88px;
         display: flex;
         flex-direction: column;
         gap: 8px;
-      }      
-      .ops-btn {
+      }
+      .ops-btn {    /* botón de operaciones */
         background: #ffd166;
         font-weight: 600;
       }
@@ -85,8 +86,12 @@
     <div class="calculator">
       <input type="text" id="txtDisplay" class="screenDisplay" readonly />
       <div class="buttons-panel">
-        <div class="num-panel" id="divNumPanel"></div>
-        <div class="ops-panel" id="divOpsPanel"></div>
+        <div class="num-panel" id="divNumPanel">
+            <!-- dentro se crearán las filas con los botones de números y el botón C -->
+        </div>
+        <div class="ops-panel" id="divOpsPanel">
+            <!-- aquí se crearán los botones de los operadores y el de resultado -->
+        </div>
       </div>
     </div>
 
@@ -118,8 +123,8 @@
       for (let r = 0; r < rows.length; r++) {
         let row = document.createElement("div");
         row.classList.add("num-row");
-         for (let c = 0; c < rows[r].length; c++) {
-          let buttonValue = rows[r][c];  //asignamos el valor del botón según el valor del array
+        for (let c = 0; c < rows[r].length; c++) {
+          let buttonValue = rows[r][c]; //asignamos el valor del botón según el valor del array
           let numButton = document.createElement("input");
           numButton.setAttribute("type", "button");
           numButton.setAttribute("value", buttonValue);
@@ -132,10 +137,9 @@
 
       /***** Panel de operaciones (ops-panel) *****/
       // Creamos los botones de los operadores y el de calcular
-      
+
       // Botones de operaciones
       let operators = ["+", "-", "/", "*"];
-
       for (let i = 0; i < operators.length; i++) {
         let opsButton = document.createElement("input");
         opsButton.setAttribute("type", "button");
@@ -153,9 +157,11 @@
       resultButton.classList.add("ops-btn");
       opsPanel.appendChild(resultButton);
 
+      /**** funciones ****/
       function calculate() {
         let value2 = Number(display.value);
         let result = 0;
+
         switch (operator) {
           case "+":
             result = value1 + value2;
@@ -170,12 +176,16 @@
             result = value1 * value2;
             break;
         }
-        // Convertimos el resultado a texto y lo mostramos en el visor
-        display.value = result.toString();
+        // Mostrar el resultado en el visor (error división por cero)
+        if(result === Infinity || result === -Infinity ) {
+                display.value = "Error";
+        }
+        else   
+            display.value = result.toString();
       }
 
+      // Reinicia estado y deja el visor en '0'
       function clearAll() {
-        // Reinicia estado y deja el visor en '0'
         value1 = 0;
         operator = "";
         display.value = "0";
@@ -186,8 +196,9 @@
         operator = event.target.value;
         display.value = "";
       }
+
+      // Si el visor contiene '0' inicial, reemplazarlo al escribir un número    
       function displayButton(event) {
-        // Si el visor contiene '0' inicial, reemplazarlo al escribir un número
         if (display.value === "0") {
           display.value = event.target.value;
         } else {
