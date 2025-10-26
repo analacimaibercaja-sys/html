@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Calculadora</title>
+    <style>
+        :root{
+            --bg:#f3f4f6;
+            --panel:#fff;
+            --accent:#0f62fe;
+            --btn:#e6e7ea;
+            --op:#ffd166;
+            --danger:#ff6b6b;
+        }
+        html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+        body{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background:var(--bg);
+            padding:24px;
+        }
+        .calculator{
+            width:360px;
+            background:var(--panel);
+            border-radius:12px;
+            box-shadow:0 6px 18px rgba(10,10,10,0.08);
+            padding:16px;
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+        }
+        .display{
+            width:100%;
+            box-sizing:border-box;
+            font-size:1.5rem;
+            padding:12px;
+            border-radius:8px;
+            border:1px solid #ddd;
+            background:#fafafa;
+            text-align:right;
+            outline:none;
+        }
+        .body{
+            display:flex;
+            gap:12px;
+        }
+        .num-panel{
+            flex:1;
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+        }
+        .num-row{
+            display:flex;
+            gap:8px;
+        }
+        .num-row.center{justify-content:center}
+        button{
+            flex:1;
+            padding:14px 8px;
+            font-size:1.1rem;
+            border-radius:8px;
+            border:0;
+            background:var(--btn);
+            cursor:pointer;
+            user-select:none;
+            box-shadow:0 1px 0 rgba(0,0,0,0.03) inset;
+        }
+        button:active{transform:translateY(1px)}
+        .btn-wide{flex:2}
+        .ops{
+            width:88px;
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+        }
+        .op-btn{background:var(--op); font-weight:600}
+        .clear{background:var(--danger); color:#fff}
+    </style>
+</head>
+<body>
+    <div class="calculator" id="calculator">
+        <input type="text" id="display" class="display" readonly aria-label="Visor"/>
+        <div class="body">
+            <div class="num-panel" id="numPanel"></div>
+            <div class="ops" id="opsPanel"></div>
+        </div>
+    </div>
+
+    <script>
+        // GitHub Copilot
+        // Lógica sencilla y fácil de mantener: datos + una fábrica de botones.
+        (function(){
+            const numPanel = document.getElementById('numPanel');
+            const opsPanel = document.getElementById('opsPanel');
+            const display = document.getElementById('display');
+
+            // Estado (patrón clásico de calculadora)
+            let firstOperand = null;
+            let operator = null;
+            let waitingForSecond = false;
+            let displayValue = '0';
+
+            function updateDisplay(){
+                display.value = displayValue;
+            }
+
+            // Operaciones
+            function calculate(a, b, op){
+                a = parseFloat(a); b = parseFloat(b);
+                if (isNaN(a) || isNaN(b)) return '';
+                switch(op){
+                    case '+': return (a + b).toString();
+                    case '-': return (a - b).toString();
+                    case '×': return (a * b).toString();
+                    case '÷': return b === 0 ? 'Error' : (a / b).toString();
+                }
+                return b.toString();
+            }
+
+            // Manejo de eventos
+            function onNumber(digit){
+                if (waitingForSecond){
+                    displayValue = digit;
+                    waitingForSecond = false;
+                } else {
+                    displayValue = displayValue === '0' ? digit : displayValue + digit;
+                }
+                updateDisplay();
+            }
+
+            function onDecimal(){
+                if (waitingForSecond){
+                    displayValue = '0.';
+                    waitingForSecond = false;
+                } else if (!displayValue.includes('.')){
+                    displayValue += '.';
+                }
+                updateDisplay();
+            }
+
+            function onOperator(nextOp){
+                if (operator && !waitingForSecond){
+                    // realizar operación pendiente
+                    const result = calculate(firstOperand, displayValue, operator);
+                    displayValue = result;
+                    firstOperand = result === 'Error' ? null : result;
+                } else if (!operator){
+                    firstOperand = displayValue;
+                }
+                operator = nextOp;
+                waitingForSecond = true;
+                updateDisplay();
+            }
+
+            function onEquals(){
+                if (!operator || waitingForSecond) return;
+                const result = calculate(firstOperand, displayValue, operator);
+                displayValue = result;
+                firstOperand = null;
+                operator = null;
+                waitingForSecond = false;
+                updateDisplay();
+            }
+
+            function onClear(){
+                firstOperand = null; operator = null; waitingForSecond = false; displayValue = '0'; updateDisplay();
+            }
+
+            // Fabrica de botones
+            function createButton(text, className, onClick){
+                const btn = document.createElement('button');
+                btn.textContent = text;
+                if (className) btn.classList.add(className);
+                btn.addEventListener('click', onClick);
+                return btn;
+            }
+
+            // Crear panel numérico: filas 1-3,4-6,7-9, fila con 0 centrado
+            const rows = [
+                ['1','2','3'],
+                ['4','5','6'],
+                ['7','8','9'],
+                ['0']
+            ];
+            rows.forEach((row)=>{
+                const rowEl = document.createElement('div');
+                rowEl.className = 'num-row' + (row.length === 1 ? ' center' : '');
+                row.forEach((n)=>{
+                    const btn = createButton(n, n === '0' ? 'btn-wide' : '', ()=> onNumber(n));
+                    if (n === '0') btn.classList.add('btn-wide');
+                    rowEl.appendChild(btn);
+                });
+                numPanel.appendChild(rowEl);
+            });
+
+            // Operadores y controles
+            const ops = [
+                {text:'+', handler:()=> onOperator('+')},
+                {text:'-', handler:()=> onOperator('-')},
+                {text:'×', handler:()=> onOperator('×')},
+                {text:'÷', handler:()=> onOperator('÷')},
+                {text:'=', handler:()=> onEquals(), class:'op-btn'}
+            ];
+            // Clear y decimal arriba
+            opsPanel.appendChild(createButton('C','clear', onClear));
+            opsPanel.appendChild(createButton('.', '', onDecimal));
+            ops.forEach(o=>{
+                opsPanel.appendChild(createButton(o.text, o.class || 'op-btn', o.handler));
+            });
+
+            // Inicializar
+            updateDisplay();
+        })();
+    </script>
+</body>
+</html>

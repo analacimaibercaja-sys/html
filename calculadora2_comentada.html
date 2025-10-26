@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Calculadora (comentada)</title>
+    <style>
+      /* Estilos simples; iguales a calculadora2.html pero no usamos variables CSS */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto,
+          "Helvetica Neue", Arial;
+      }
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f3f4f6;
+        padding: 24px;
+      }
+      .calculator {
+        width: 360px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(10, 10, 10, 0.08);
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .display {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 1.5rem;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        background: #fafafa;
+        text-align: right;
+      }
+      .body {
+        display: flex;
+        gap: 12px;
+      }
+      .num-panel {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .num-row {
+        display: flex;
+        gap: 8px;
+      }
+      .num-row.center {
+        justify-content: center;
+      }
+      input[type="button"] {
+        flex: 1;
+        padding: 14px 8px;
+        font-size: 1.1rem;
+        border-radius: 8px;
+        border: 0;
+        background: #e6e7ea;
+        cursor: pointer;
+      }
+      input[type="button"].op-btn {
+        background: #ffd166;
+        font-weight: 600;
+      }
+      input[type="button"].clear {
+        background: #ff6b6b;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="calculator">
+      <!-- El visor es un input readonly donde mostramos los números/resultados -->
+      <input
+        id="display"
+        class="display"
+        type="text"
+        readonly
+        aria-label="Visor"
+      />
+      <div class="body">
+        <div id="numPanel" class="num-panel"></div>
+        <div id="opsPanel" class="ops"></div>
+      </div>
+    </div>
+
+    <script>
+      /*
+      Versión paso a paso de la calculadora.
+      Comentarios explican cada bloque y cada línea importante.
+    */
+
+      // VARIABLES DE ESTADO
+      // 'valor1' guardará el primer operando (Number)
+      var valor1 = 0;
+      // 'operacion' guardará el símbolo de la operación ('+', '-', '*', '/')
+      var operacion = "";
+
+      // Referencias al DOM
+      var visor = document.getElementById("display");
+      var numPanel = document.getElementById("numPanel");
+      var opsPanel = document.getElementById("opsPanel");
+
+      // Inicializamos el visor con '0' (estado inicial amigable)
+      visor.value = "0";
+
+      /*
+      CREAR BOTONES NUMÉRICOS
+      Queremos 4 filas:
+        ['1','2','3']
+        ['4','5','6']
+        ['7','8','9']
+        ['0']
+      La última fila sólo contiene el 0 y estará centrada.
+    */
+      var rows = [["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"], ["0"]];
+
+      // Recorremos cada fila
+      for (var r = 0; r < rows.length; r++) {
+        var rowEl = document.createElement("div");
+        // Clase para aplicar estilos de fila; si es la última, añadir 'center'
+        rowEl.className = "num-row" + (rows[r].length === 1 ? " center" : "");
+
+        // Crear botones de esa fila
+        for (var c = 0; c < rows[r].length; c++) {
+          var label = rows[r][c];
+          // input type="button" es el botón que usamos
+          var b = document.createElement("input");
+          b.setAttribute("type", "button");
+          b.setAttribute("value", label);
+
+          // Al hacer click llamamos a la función que añade el dígito al visor
+          b.addEventListener("click", function (event) {
+            // event.target.value contiene el texto del botón pulsado
+            onNumberClick(event.target.value);
+          });
+
+          rowEl.appendChild(b);
+        }
+        numPanel.appendChild(rowEl);
+      }
+
+      /*
+      CREAR OPERADORES
+      Los operadores serán botones con clase 'op-btn' para destacar su color.
+    */
+      var ops = ["+", "-", "/", "*"];
+      // Añadimos primero el botón Clear
+      var clearBtn = document.createElement("input");
+      clearBtn.setAttribute("type", "button");
+      clearBtn.setAttribute("value", "C");
+      clearBtn.classList.add("clear");
+      clearBtn.addEventListener("click", function () {
+        clearAll();
+      });
+      opsPanel.appendChild(clearBtn);
+
+      // Ahora los operadores
+      for (var i = 0; i < ops.length; i++) {
+        (function (op) {
+          var ob = document.createElement("input");
+          ob.setAttribute("type", "button");
+          ob.setAttribute("value", op);
+          ob.classList.add("op-btn");
+          // Cuando pulsemos un operador guardamos el primer operando y la operación
+          ob.addEventListener("click", function () {
+            onOperatorClick(op);
+          });
+          opsPanel.appendChild(ob);
+        })(ops[i]);
+      }
+
+      // Botón '='
+      var eq = document.createElement("input");
+      eq.setAttribute("type", "button");
+      eq.setAttribute("value", "=");
+      eq.classList.add("op-btn");
+      eq.addEventListener("click", function () {
+        computeResult();
+      });
+      opsPanel.appendChild(eq);
+
+      /*
+      FUNCIONES PRINCIPALES
+      - onNumberClick: manejar dígitos
+      - onOperatorClick: seleccionar operación (guardar primer operando)
+      - computeResult: calcular y mostrar resultado
+      - clearAll: reiniciar estado
+    */
+
+      function onNumberClick(digit) {
+        // Si el visor está en '0' (estado inicial) lo reemplazamos
+        if (visor.value === "0") {
+          visor.value = digit;
+        } else {
+          // Concatenamos dígito al final del valor actual
+          visor.value = visor.value + digit;
+        }
+      }
+
+      function onOperatorClick(op) {
+        // Guardamos el valor actual como primer operando
+        valor1 = Number(visor.value);
+        // Guardamos qué operación se ha elegido
+        operacion = op;
+        // Limpiamos el visor para el segundo operando
+        visor.value = "";
+      }
+
+      function computeResult() {
+        // Tomamos el segundo operando del visor
+        var valor2 = Number(visor.value);
+        var res = 0;
+
+        // Dependiendo de la operación, calculamos
+        if (operacion === "+") res = valor1 + valor2;
+        else if (operacion === "-") res = valor1 - valor2;
+        else if (operacion === "*") res = valor1 * valor2;
+        else if (operacion === "/") {
+          // Prevención simple de división por cero
+          if (valor2 === 0) {
+            // Mostramos 'Error' y salimos
+            visor.value = "Error";
+            return;
+          }
+          res = valor1 / valor2;
+        }
+
+        // Convertimos a cadena y mostramos
+        visor.value = String(res);
+      }
+
+      function clearAll() {
+        // Reiniciamos variables y mostramos 0
+        valor1 = 0;
+        operacion = "";
+        visor.value = "0";
+      }
+    </script>
+  </body>
+</html>

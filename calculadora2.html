@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      }
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f3f4f6;
+        padding: 24px;
+      }
+      .calculator {
+        width: 360px;
+        background: #fff;
+        border-radius: 12px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .screenDisplay {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 1.5rem;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        background: #fafafa;
+        text-align: right;
+      }
+      .buttons-panel {
+        display: flex;
+        gap: 12px;
+      }
+      .num-panel {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .num-row {
+        display: flex;
+        gap: 8px;
+      }
+      input[type="button"] {
+        flex: 1;
+        padding: 14px 8px;
+        font-size: 1.5rem;
+        border-radius: 8px;
+        border: 0;
+        cursor: pointer;
+      }
+      input[type="button"]:active {
+        transform: translateY(1px); /* mover un pixel para el efecto de pulsar el botón*/
+      }
+      .num-btn {
+        background: #e6e7ea;
+      }
+      .clr-btn {
+        background: #ff6b6b;
+        color: #fff;
+      }
+      .ops-panel {
+        width: 88px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }      
+      .ops-btn {
+        background: #ffd166;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="calculator">
+      <input type="text" id="txtDisplay" class="screenDisplay" readonly />
+      <div class="buttons-panel">
+        <div class="num-panel" id="divNumPanel"></div>
+        <div class="ops-panel" id="divOpsPanel"></div>
+      </div>
+    </div>
+
+    <script>
+      let value1 = 0;
+      let numPanel = document.getElementById("divNumPanel");
+      let opsPanel = document.getElementById("divOpsPanel");
+      let operator = "";
+      let display = document.getElementById("txtDisplay");
+
+      // Inicializar el visor a '0'
+      display.value = "0";
+
+      /****** Panel de botones numéricos (num-panel) *****/
+
+      //botón clear (C) para reiniciar la calculadora
+      let clrButton = document.createElement("input");
+      clrButton.setAttribute("type", "button");
+      clrButton.setAttribute("value", "C");
+      clrButton.classList.add("clr-btn");
+      clrButton.addEventListener("click", clearAll);
+      numPanel.appendChild(clrButton);
+
+      // array con los números y su disposición en filas
+      let rows = [["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"], ["0"]];
+
+      // Por cada fila creamos un contenedor <div> con clase .num-row
+      // y en cada fila creamos los botones numéricos
+      for (let r = 0; r < rows.length; r++) {
+        let row = document.createElement("div");
+        row.classList.add("num-row");
+         for (let c = 0; c < rows[r].length; c++) {
+          let buttonValue = rows[r][c];  //asignamos el valor del botón según el valor del array
+          let numButton = document.createElement("input");
+          numButton.setAttribute("type", "button");
+          numButton.setAttribute("value", buttonValue);
+          numButton.classList.add("num-btn");
+          numButton.addEventListener("click", displayButton);
+          row.appendChild(numButton);
+        }
+        numPanel.appendChild(row);
+      }
+
+      /***** Panel de operaciones (ops-panel) *****/
+      // Creamos los botones de los operadores y el de calcular
+      
+      // Botones de operaciones
+      let operators = ["+", "-", "/", "*"];
+
+      for (let i = 0; i < operators.length; i++) {
+        let opsButton = document.createElement("input");
+        opsButton.setAttribute("type", "button");
+        opsButton.setAttribute("value", operators[i]);
+        opsButton.classList.add("ops-btn");
+        opsButton.addEventListener("click", opera);
+        opsPanel.appendChild(opsButton);
+      }
+
+      // Botón igual
+      let resultButton = document.createElement("input");
+      resultButton.setAttribute("type", "button");
+      resultButton.setAttribute("value", "=");
+      resultButton.addEventListener("click", calculate);
+      resultButton.classList.add("ops-btn");
+      opsPanel.appendChild(resultButton);
+
+      function calculate() {
+        let value2 = Number(display.value);
+        let result = 0;
+        switch (operator) {
+          case "+":
+            result = value1 + value2;
+            break;
+          case "-":
+            result = value1 - value2;
+            break;
+          case "/":
+            result = value1 / value2;
+            break;
+          case "*":
+            result = value1 * value2;
+            break;
+        }
+        // Convertimos el resultado a texto y lo mostramos en el visor
+        display.value = result.toString();
+      }
+
+      function clearAll() {
+        // Reinicia estado y deja el visor en '0'
+        value1 = 0;
+        operator = "";
+        display.value = "0";
+      }
+
+      function opera(event) {
+        value1 = Number(display.value);
+        operator = event.target.value;
+        display.value = "";
+      }
+      function displayButton(event) {
+        // Si el visor contiene '0' inicial, reemplazarlo al escribir un número
+        if (display.value === "0") {
+          display.value = event.target.value;
+        } else {
+          display.value += event.target.value;
+        }
+      }
+    </script>
+  </body>
+</html>
