@@ -6,7 +6,10 @@
     <title>¡Gatitos!</title>
     <style>
       header {
-        height: 100px;
+        height: 200px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
       }
       footer {
         height: 50px;
@@ -70,28 +73,28 @@
       }
       @keyframes ballmovement {
         0% {
-          left: 0px;
-          top: 0px;
+          left: 0;
+          top: 0;
           animation-timing-function: ease-in;
         }
         20% {
-          left: 120px;
+          left: 20vw;
           top: 160px;
         }
         40% {
-          left: 240px;
-          top: 0px;
+          left: 40vw;
+          top: 0;
         }
         60% {
-          left: 360px;
+          left: 60vw;
           top: 160px;
         }
         80% {
-          left: 480px;
-          top: 0px;
+          left: 80vw;
+          top: 0;
         }
         100% {
-          left: 600px;
+          left: calc(100vw - 50px);
           top: 160px;
           animation-timing-function: ease-out;
         }
@@ -103,11 +106,22 @@
         animation-timing-function: linear;
         animation-iteration-count: 1;
       }
+      #headerImage {
+        display: none;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
     </style>
   </head>
   <body onload="init()">
     <header id="pooltable">
       <img src="img/zarrio200x200.png" id="ball" alt="zarrio" />
+      <img
+        src="img/gato_multicolor.svg"
+        id="headerImage"
+        alt="gato multicolor"
+      />
     </header>
     <main>
       <div class="maincontent">
@@ -124,6 +138,9 @@
 
         function onAnimationEnd() {
           ball.classList.remove("animate");
+          ball.style.display = "none"; 
+          let headerImage = document.getElementById("headerImage");
+          headerImage.style.display = "block";
           fetchAndShowImages();
         }
         ball.addEventListener("animationend", onAnimationEnd, false);
