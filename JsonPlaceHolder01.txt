@@ -1,0 +1,10 @@
+https://www.freecodecamp.org/espanol/news/javascript-fetch-api-para-principiantes/
+
+Queremos un visor de usuarios de jsonplaceholder, esto es en nuestra página web tendremos un cuadro de texto donde introduciremos el numero de usuario que queremos consultar. 
+
+Por ejemplo: Usuario 1 y luego un botón OK
+Al pulsar OK asincronamiente se irá al Servicio y recuperará la información del usuario en cuestión.
+https://jsonplaceholder.typicode.com/users/1
+Queremos que nos salga un h1 con el nombre completo y debajo con h2 la dirección completa.
+
+En una lista desordenada sacar todos los post de ese usuario.

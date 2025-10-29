@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .text-shadow {
+            color: #d9d9d9;
+            text-shadow: -1px -1px 1px rgba(255,255,255,.1), 1px 1px 1px rgba(0,0,0,.5);
+        }
+    </style>
+</head>
+<body>
+        <div>
+        <input type="text" id="input1" placeholder="Numero de usuario">
+        <button id="boton">Process</button>
+        <div>
+            <h1 id="usuario"></h1>
+            <h2 id="result"></h2>
+        </div>
+    </div>
+    <script>
+        let url = "https://jsonplaceholder.typicode.com/users/";
+        let urlAlbum = "https://jsonplaceholder.typicode.com/albums?userId=";
+        document.getElementById("boton").addEventListener("click",sacaInfoUsuario);
+
+        function sacaInfoUsuario()
+        {
+            let numeroUsuario = document.getElementById("input1").value;
+            console.log(numeroUsuario);
+            url += numeroUsuario;
+            fetch(url)
+            .then((response) => response.json())
+            .then((json) => {
+                let parrafonuevo = document.createElement("p");
+                parrafonuevo.textContent = json.name + ' (' + json.address.city +')';
+                document.getElementById("usuario").appendChild(parrafonuevo);
+            })
+            url="https://jsonplaceholder.typicode.com/users/";
+            
+            urlAlbum += numeroUsuario;
+            fetch(urlAlbum)
+            .then(respuesta => respuesta.json())
+            .then(datos=> {
+                datos.forEach(element => {
+                        let parrafonuevo = document.createElement("p");
+                        parrafonuevo.className = "text-shadow";
+                        parrafonuevo.textContent = element.title;
+                        document.getElementById("result").appendChild(parrafonuevo);
+                })}
+            )
+            clearResults();
+        }
+        function clearResults() {
+            document.getElementById("result").innerHTML = "";
+            url="https://jsonplaceholder.typicode.com/users/";
+            urlAlbum="https://jsonplaceholder.typicode.com/albums?userId=";
+
+        }   
+    </script>
+</body>
+</html>

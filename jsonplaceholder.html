@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="txtUser" name="txtUser" placeholder="User">
+    <input type="button" id="btnOK" value="OK">
+
+    <h1 id="userName"></h1>
+    <h2 id="userAddress"></h2>
+
+    <ol id="list"></ol>
+
+    <script>
+        document.getElementById('btnOK').addEventListener('click',obtenerDatos);
+        function obtenerDatos(){
+            let user = document.getElementById('txtUser').value;
+            console.log(user);
+            fetch('https://jsonplaceholder.typicode.com/users/' + user)
+                .then(respuesta => respuesta.json())
+                .then(datos => {
+                    document.querySelector('#userName').textContent = datos.name;
+                    document.querySelector('#userAddress').textContent = datos.address.street + ', ' + 
+                    datos.address.suite + ', ' + datos.address.city + ', ' + datos.address.zipcode + '.' + 
+                    datos.address.geo.lat + ', ' + datos.address.geo.lng;
+                    agregarALista();
+                })
+                .catch(error => {
+                    console.log('Error al obtener los datos: ' + error);
+                });
+        }  
+
+        function agregarALista(){
+            let userNameList = document.getElementById('userName').textContent;
+            console.log(userNameList);
+            let userAddressList = document.getElementById('userAddress').textContent;
+            let lista = document.getElementById('list');
+            let elemento = document.createElement('li');
+            elemento.textContent = userNameList + ' - ' + userAddressList;
+            lista.appendChild(elemento);
+        }
+
+    </script>
+</body>
+</html>

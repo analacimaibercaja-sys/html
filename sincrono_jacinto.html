@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sync Work Example</title>
+</head>
+
+<body>
+    <div>
+        <input type="text" id="input1" placeholder="Numero de usuario">
+        <button id="boton">Process</button>
+        <p id="result">
+            <h1 id="usuario"></h1>
+        </p>
+    </div>
+    <script>
+        let url = "https://jsonplaceholder.typicode.com/users/";
+        let urlPost = "https://jsonplaceholder.typicode.com/posts?userId=";
+        document.getElementById("boton").addEventListener("click",sacaInfoUsuario);
+        function sacaInfoUsuario()
+        {
+            let numeroUsuario = document.getElementById("input1").value;
+            url += numeroUsuario;
+            fetch(url)
+            .then((response) => response.json())
+            .then((json) => {
+
+                let parrafonuevo = document.createElement("p");
+                parrafonuevo.textContent = json.name;
+                document.getElementById("result").appendChild(parrafonuevo);
+            })
+            
+            urlPost += numeroUsuario;
+            fetch(urlPost)
+            .then(respuesta => respuesta.json())
+            .then(datos=> {
+                datos.forEach(element => {
+                        let parrafonuevo = document.createElement("p");
+                        parrafonuevo.textContent = element.title;
+                        document.getElementById("result").appendChild(parrafonuevo);
+                })}
+            )
+        }
+    </script>
+</body>
+
+</html>

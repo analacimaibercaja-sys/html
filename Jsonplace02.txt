@@ -1,0 +1,6 @@
+Introduciendo un numero de usuario como la vez anterior quiero lo siguiente:
+Devolver el nombre y la ciudad donde vive entre paréntesis.
+En la parte inferior tendremos el titulo de todos los albums que ha hecho el usuario, quiero que me salgan los títulos con un formato de texto que tenga sombra.
+
+https://jsonplaceholder.typicode.com/albums?userId=3
+

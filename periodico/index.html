@@ -12,18 +12,31 @@
         p::first-letter{
             font-size: 2em;
         }
-
-        @media (min-width: 1025px) {
-
+        body {
+            display: flex;
+            flex-direction: column;
         }
 
         @media (min-width: 768px) and (max-width: 1024px) {
-            
+            body {
+            flex-direction: row;
+            flex-wrap: wrap;
+            }
+            p {
+            flex: 1 1 50%; /* 2 columnas en tablet */
+            }
         }
 
-        @media (max-width: 767px) {
-            
+        @media (min-width: 1025px) {
+            body {
+            flex-direction: row;
+            flex-wrap: wrap;
+            }
+            p {
+            flex: 1 1 33.33%; /* 3 columnas en dispositivos grandes */
+            }
         }
+
     </style>
 </head>
 <body>

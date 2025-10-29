@@ -1,0 +1,10 @@
+Buscar una imagen de una trasto, zarrio. 
+Lo que quiero es que vaya saltando por la parte superior de la pantalla.
+
+----------------------------------
+
+https://developers.thecatapi.com/view-account
+Después de que el zarrio termine su animación quiero ver una colección aleatoria de gaticos, por lo menos 10.
+
+
+
