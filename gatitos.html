@@ -1,209 +1,182 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>¡Gatitos!</title>
     <style>
-        header{
-            height: 100px;
-        }
-        footer{
-            height: 50px;
-        }
-        .maincontent{
-            padding-top: 0%;
-            padding-left:0%;
-        }
-        .col {
-            padding: 1%;
-        }
-        .col-lg{
-            height: 200px;
-            overflow: hidden;
-            margin: 10px 0;
-            position: relative;
-        }
+      header {
+        height: 200px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+      footer {
+        height: 50px;
+      }
+      .maincontent {
+        padding-top: 0%;
+        padding-left: 0%;
+      }
+      .col {
+        padding: 1%;
+      }
+      .col-lg {
+        height: 200px;
+        overflow: hidden;
+        margin: 10px 0;
+        position: relative;
+      }
 
-        .col-lg img{
-        display:block;
-            position: absolute;
-            left: -1000%;
-            right: -1000%;
-            top: -1000%;
-            bottom: -1000%;
-            margin: auto;
-            min-height: 100%;
-            min-width: 100%;
+      .col-lg img {
+        display: block;
+        position: absolute;
+        left: -1000%;
+        right: -1000%;
+        top: -1000%;
+        bottom: -1000%;
+        margin: auto;
+        min-height: 100%;
+        min-width: 100%;
+      }
+      .imgrid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      @media (max-width: 480px) {
+        .col-lg {
+          flex-basis: 98%;
         }
-        .imgrid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+      }
+      @media (min-width: 481px) and (max-width: 768px) {
+        .col-lg {
+          flex-basis: 46%;
         }
-        @media (max-width: 480px) {
-            .col-lg {
-                flex-basis: 98%;
-            }
+      }
+      @media (min-width: 769px) and (max-width: 1024px) {
+        .col-lg {
+          flex-basis: 29%;
         }
-        @media (min-width: 481px) and (max-width: 768px) {
-            .col-lg {
-                flex-basis: 46%;
-            }
+      }
+      @media (min-width: 1025px) {
+        .col-lg {
+          flex-basis: 22%;
         }
-        @media (min-width: 769px) and (max-width: 1024px)
-        {
-            .col-lg {
-                flex-basis: 29%;
-            }
+      }
+      #ball {
+        width: 50px;
+        height: 50px;
+        position: relative;
+        left: 0px;
+        top: 0px;
+      }
+      @keyframes ballmovement {
+        0% {
+          left: 0;
+          top: 0;
+          animation-timing-function: ease-in;
         }
-        @media (min-width: 1025px) {
-            .col-lg {
-                flex-basis: 22%;
-            }
-            
+        20% {
+          left: 20vw;
+          top: 160px;
         }
-        /*
-        #pooltable {
-            width: 640px;
-            height: 200px;
-            margin-bottom: 50px;
-            border-radius: 5px;
-            background: #daede9;
+        40% {
+          left: 40vw;
+          top: 0;
         }
-        #pooltable.animate {
-            background: blue;
+        60% {
+          left: 60vw;
+          top: 160px;
         }
-            */
-        #ball {
-            width: 50px;
-            height: 50px;
-            position: relative;
-            left: 0px;
-            top: 0px;
+        80% {
+          left: 80vw;
+          top: 0;
         }
-        @keyframes ballmovement {
-            0% {
-                left: 0px;
-                top: 0px;
-                animation-timing-function: ease-in;
-            }
-            20% {
-                left: 120px;
-                top: 160px;
-            }
-            40% {
-                left: 240px;
-                top: 0px;
-            }
-            60% {
-                left: 360px;
-                top: 160px;
-            }            
-            80% {
-                left: 480px;
-                top: 0px;
-            }   
-            100% {
-                left: 600px;
-                top: 160px;
-                animation-timing-function: ease-out;
-            }
+        100% {
+          left: calc(100vw - 50px);
+          top: 160px;
+          animation-timing-function: ease-out;
         }
-        #ball.animate {
-            animation-name: ballmovement;
-            animation-duration: 5s;
-            animation-delay: 0.5s;
-            animation-timing-function: linear;
-            animation-iteration-count: 1;
-        }
+      }
+      #ball.animate {
+        animation-name: ballmovement;
+        animation-duration: 5s;
+        animation-delay: 0.5s;
+        animation-timing-function: linear;
+        animation-iteration-count: 1;
+      }
+      #headerImage {
+        display: none;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
     </style>
-</head>
-<body onload="startAnimation()">
-    <header>
-    <div id="pooltable">
-        <img src="img/zarrio200x200.png" id="ball" alt="zarrio">
-    </div>
+  </head>
+  <body onload="init()">
+    <header id="pooltable">
+      <img src="img/zarrio200x200.png" id="ball" alt="zarrio" />
+      <img
+        src="img/gato_multicolor.svg"
+        id="headerImage"
+        alt="gato multicolor"
+      />
     </header>
-    <div id="messageLabel"></div>
-        <div class="maincontent">
+    <main>
+      <div class="maincontent">
         <div id="grid" class="imgrid"></div>
-    </div>
-
-    <footer>
-    </footer>
+      </div>
+    </main>
+    <footer></footer>
 
     <script>
-        
-               // Declare global variables.
-        var pooltable, ball, button, messageLabel;
+      var ball;
 
+      function init() {
+        ball = document.getElementById("ball");
 
-        // Page initialization - handle ball animation events.
-        function init() {
-
-            // Initialize global variables.
-            pooltable = document.getElementById("pooltable");
-            ball = document.getElementById("ball");
-            button = document.getElementById("button");
-            messageLabel = document.getElementById("messageLabel");
-
-            // Handle the event that occurs when the ball animation starts.
-            ball.addEventListener("MSAnimationStart", function (e) {
-                pooltable.classList.add("animate");
-                messageLabel.innerHTML += "Animation <b>" +  e.animationName + "</b> started at " + new Date() + ".<br>";
-            }, false);
-
-            // Handle the event that occurs for each iteration.
-            ball.addEventListener("MSAnimationIteration", function (e) {
-                messageLabel.innerHTML += "Animation <b>" +  e.animationName + "</b> iteration completed, elapsed time " + e.elapsedTime + ".<br>";
-            }, false);
-
-            // Handle the event that occurs when the ball animation ends.
-            ball.addEventListener("MSAnimationEnd", function (e) {
-                button.disabled = false;
-                ball.classList.remove("animate");
-                pooltable.classList.remove("animate");
-                messageLabel.innerHTML += "Animation <b>" +  e.animationName + "</b> ended, elapsed time " + e.elapsedTime + " seconds.<br>";
-            }, false);
+        function onAnimationEnd() {
+          ball.classList.remove("animate");
+          ball.style.display = "none"; 
+          let headerImage = document.getElementById("headerImage");
+          headerImage.style.display = "block";
+          fetchAndShowImages();
         }
-
-
-        // Start the ball animation.
-        function startAnimation() {
-            button.disabled = true;
-            ball.classList.add("animate");
+        ball.addEventListener("animationend", onAnimationEnd, false);
+        if (ball) {
+          ball.classList.add("animate");
         }
-        //change the limit to however many images to use
-        const url = `https://api.thecatapi.com/v1/images/search?limit=20`;
-        const api_key = "live_7iJ0Tbk6xRVycWgoqc1INFyoZb0hLr4gqe6UGWqp9SmNlR4ohnGd9qyXj8soMx9f"
+      }
 
-        fetch(url,{headers: {
-            'x-api-key': api_key
-            }})
-        .then((response) => {
-            return response.json();
+      function fetchAndShowImages() {
+        const url = "https://api.thecatapi.com/v1/images/search?limit=20";
+        const api_key =
+          "live_7iJ0Tbk6xRVycWgoqc1INFyoZb0hLr4gqe6UGWqp9SmNlR4ohnGd9qyXj8soMx9f";
+
+        fetch(url, {
+          headers: {
+            "x-api-key": api_key,
+          },
         })
-        .then((data) => {
-            let imagesData = data;
-            imagesData.map(function(imageData) {
-                
-                let image = document.createElement('img');
-                //use the url from the image object
-                image.src = `${imageData.url}`;
-                    
-                let gridCell = document.createElement('div');
-                gridCell.classList.add('col');
-                gridCell.classList.add('col-lg');
-                gridCell.appendChild(image)
-                
-                document.getElementById('grid').appendChild(gridCell);
-                
-                });
-            })
-        .catch(function(error) {
-            console.log(error);
-        });
+          .then((response) => response.json())
+          .then((data) => {
+            let grid = document.getElementById("grid");
+            data.forEach((imageData) => {
+              let image = document.createElement("img");
+              image.src = imageData.url;
+
+              let gridCell = document.createElement("div");
+              gridCell.classList.add("col", "col-lg");
+              gridCell.appendChild(image);
+
+              grid.appendChild(gridCell);
+            });
+          })
+          .catch((error) => {
+            console.error("Error cargando imágenes:", error);
+          });
+      }
     </script>
-</body>
+  </body>
 </html>
