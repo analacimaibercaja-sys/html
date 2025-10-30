@@ -5,55 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .text-shadow {
-            color: #d9d9d9;
-            text-shadow: -1px -1px 1px rgba(255,255,255,.1), 1px 1px 1px rgba(0,0,0,.5);
+        h2 {
+            color: #444444;
+            background: #FFFFFF;
+            text-shadow: 1px 0px 1px #CCCCCC, 0px 1px 1px #EEEEEE, 2px 1px 1px #CCCCCC, 1px 2px 1px #EEEEEE, 3px 2px 1px #CCCCCC, 2px 3px 1px #EEEEEE, 4px 3px 1px #CCCCCC, 3px 4px 1px #EEEEEE, 5px 4px 1px #CCCCCC, 4px 5px 1px #EEEEEE, 6px 5px 1px #CCCCCC, 5px 6px 1px #EEEEEE, 7px 6px 1px #CCCCCC;
         }
     </style>
 </head>
 <body>
-        <div>
-        <input type="text" id="input1" placeholder="Numero de usuario">
-        <button id="boton">Process</button>
-        <div>
-            <h1 id="usuario"></h1>
-            <h2 id="result"></h2>
-        </div>
+    <div>
+        <input type="text" id="txtUser" name="txtUser" placeholder="User">
+        <input type="button" id="btnOK" value="OK">
+
+        <div id="userName"></div>
+        <div id="userAlbums"></div>
     </div>
     <script>
         let url = "https://jsonplaceholder.typicode.com/users/";
         let urlAlbum = "https://jsonplaceholder.typicode.com/albums?userId=";
-        document.getElementById("boton").addEventListener("click",sacaInfoUsuario);
+        document.getElementById("btnOK").addEventListener("click",getData);
 
-        function sacaInfoUsuario()
+        function getData()
         {
-            let numeroUsuario = document.getElementById("input1").value;
-            console.log(numeroUsuario);
-            url += numeroUsuario;
+            let user = document.getElementById("txtUser").value;
+            console.log(user);
+            url += user;
             fetch(url)
             .then((response) => response.json())
             .then((json) => {
-                let parrafonuevo = document.createElement("p");
-                parrafonuevo.textContent = json.name + ' (' + json.address.city +')';
-                document.getElementById("usuario").appendChild(parrafonuevo);
+                let pElement = document.createElement("h1");
+                pElement.textContent = json.name + ' (' + json.address.city +')';
+                document.getElementById("userName").appendChild(pElement);
             })
             url="https://jsonplaceholder.typicode.com/users/";
             
-            urlAlbum += numeroUsuario;
+            urlAlbum += user;
             fetch(urlAlbum)
-            .then(respuesta => respuesta.json())
-            .then(datos=> {
-                datos.forEach(element => {
-                        let parrafonuevo = document.createElement("p");
-                        parrafonuevo.className = "text-shadow";
-                        parrafonuevo.textContent = element.title;
-                        document.getElementById("result").appendChild(parrafonuevo);
+            .then(response => response.json())
+            .then(data=> {
+                data.forEach(element => {
+                        let pElement = document.createElement("h2");
+                        pElement.textContent = element.title;
+                        document.getElementById("userAlbums").appendChild(pElement);
                 })}
             )
             clearResults();
         }
         function clearResults() {
-            document.getElementById("result").innerHTML = "";
+            document.getElementById("userName").innerHTML = "";
+            document.getElementById("userAlbums").innerHTML = "";
             url="https://jsonplaceholder.typicode.com/users/";
             urlAlbum="https://jsonplaceholder.typicode.com/albums?userId=";
 

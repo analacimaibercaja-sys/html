@@ -15,33 +15,33 @@
     <ul id="list"></ul>
 
     <script>
-        document.getElementById('btnOK').addEventListener('click',obtenerDatos);
+        document.getElementById('btnOK').addEventListener('click', getData);
         let urlPost = "https://jsonplaceholder.typicode.com/posts?userId=";
         let url = "https://jsonplaceholder.typicode.com/users/";
-        function obtenerDatos(){
+        function getData(){
             let user = document.getElementById('txtUser').value;
             console.log(user);
             fetch(url + user)
-                .then(respuesta => respuesta.json())
-                .then(datos => {
-                    document.querySelector('#userName').textContent = datos.name;
-                    document.querySelector('#userAddress').textContent = datos.address.street + ', ' + 
-                    datos.address.suite + ', ' + datos.address.city + ', ' + datos.address.zipcode + '.' + 
-                    datos.address.geo.lat + ', ' + datos.address.geo.lng;
+                .then(response => response.json())
+                .then(data => {
+                    document.querySelector('#userName').textContent = data.name;
+                    document.querySelector('#userAddress').textContent = data.address.street + ', ' + 
+                    data.address.suite + ', ' + data.address.city + ', ' + data.address.zipcode + '.' + 
+                    data.address.geo.lat + ', ' + data.address.geo.lng;
                 })
                 .catch(error => {
                     console.log('Error al obtener los datos: ' + error);
                 });
             
             fetch(urlPost + user)
-                .then(respuesta => respuesta.json())
-                .then(datos => {
+                .then(response => response.json())
+                .then(data => {
                     let postList = document.getElementById('list');
                     postList.innerHTML = '';
-                    datos.forEach(post => {
-                        let li = document.createElement('li');
-                        li.textContent = post.title;
-                        postList.appendChild(li);
+                    data.forEach(post => {
+                        let liElement = document.createElement('li');
+                        liElement.textContent = post.title;
+                        postList.appendChild(liElement);
                     });
                 })
                 .catch(error => {
