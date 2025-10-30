@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>JSONPlaceholder01</title>
 </head>
 <body>
     <input type="text" id="txtUser" name="txtUser" placeholder="User">
@@ -12,37 +12,46 @@
     <h1 id="userName"></h1>
     <h2 id="userAddress"></h2>
 
-    <ol id="list"></ol>
+    <ul id="list"></ul>
 
     <script>
         document.getElementById('btnOK').addEventListener('click',obtenerDatos);
+        let urlPost = "https://jsonplaceholder.typicode.com/posts?userId=";
+        let url = "https://jsonplaceholder.typicode.com/users/";
         function obtenerDatos(){
             let user = document.getElementById('txtUser').value;
             console.log(user);
-            fetch('https://jsonplaceholder.typicode.com/users/' + user)
+            fetch(url + user)
                 .then(respuesta => respuesta.json())
                 .then(datos => {
                     document.querySelector('#userName').textContent = datos.name;
                     document.querySelector('#userAddress').textContent = datos.address.street + ', ' + 
                     datos.address.suite + ', ' + datos.address.city + ', ' + datos.address.zipcode + '.' + 
                     datos.address.geo.lat + ', ' + datos.address.geo.lng;
-                    agregarALista();
+                })
+                .catch(error => {
+                    console.log('Error al obtener los datos: ' + error);
+                });
+            
+            fetch(urlPost + user)
+                .then(respuesta => respuesta.json())
+                .then(datos => {
+                    let postList = document.getElementById('list');
+                    postList.innerHTML = '';
+                    datos.forEach(post => {
+                        let li = document.createElement('li');
+                        li.textContent = post.title;
+                        postList.appendChild(li);
+                    });
                 })
                 .catch(error => {
                     console.log('Error al obtener los datos: ' + error);
                 });
         }  
 
-        function agregarALista(){
-            let userNameList = document.getElementById('userName').textContent;
-            console.log(userNameList);
-            let userAddressList = document.getElementById('userAddress').textContent;
-            let lista = document.getElementById('list');
-            let elemento = document.createElement('li');
-            elemento.textContent = userNameList + ' - ' + userAddressList;
-            lista.appendChild(elemento);
-        }
+
 
     </script>
 </body>
 </html>
+
