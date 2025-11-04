@@ -1,0 +1,93 @@
+@use "sass:math"
+$font-general:system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial
+$color-bg-body:#f3f4f6
+$color-bg-num:#e6e7ea
+$color-bg-clr:#ff6b6b
+$color-lightcolor:#fff
+$color-darkcolor:#000
+$color-bg-ops:#ffd166
+
+$gap:8px
+$border-radio:8px
+
+@mixin button-theme($bg: $color-bg-num,$color: $color-darkcolor)
+    background: $bg
+    color: $color
+
+body
+    height: 100%
+    margin: 0
+    padding: 24px
+    font-family: $font-general 
+    background: $color-bg-body
+
+    display: flex
+    align-items: center
+    justify-content: center
+
+.calculator
+    width: 360px
+    background: $color-lightcolor
+    border-radius: $border-radio *1.5
+    padding: 16px
+
+    display: flex
+    flex-direction: column
+    gap: $gap * 1.5
+
+
+.screenDisplay 
+    width: 100%
+    box-sizing: border-box
+    font-size: 1.5rem
+    padding: 12px
+    border-radius: $border-radio
+    border: 1px solid #ddd
+    background: #fafafa
+    text-align: right
+
+.buttons-panel 
+    display: flex
+    gap: $gap * 1.5
+
+%flex-gap-shared
+    display: flex
+    gap: $gap
+
+.num-panel 
+    @extend %flex-gap-shared
+    flex: 1
+    flex-direction: column
+    
+.num-row 
+    @extend %flex-gap-shared
+    
+input[type="button"] 
+    flex: 1
+    padding: 14px 8px
+    font-size: 1.5rem
+    border-radius: $border-radio
+    border: 0
+    cursor: pointer
+    
+    active 
+        transform: translateY(1px)
+    
+.num-btn 
+    @include button-theme
+    //background: $color-bg-num
+    
+.clr-btn 
+    @include button-theme($bg:$color-bg-clr,$color:$color-lightcolor)
+    //background:$color-bg-clr
+    //color: $color-lightcolor
+    
+.ops-panel 
+    @extend %flex-gap-shared
+    width: 88px
+    flex-direction: column
+    
+.ops-btn 
+    @include button-theme($bg:$color-bg-ops,$color:$color-darkcolor)
+    font-weight: 600
+
